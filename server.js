@@ -4,7 +4,7 @@
  * Post onibus - ok 
  * Get motorista - ok
  * Get onibus - ok
- * GET /onibus/motorista - 
+ * GET /onibus/motorista - ok
  *  PUT /motoristas/onibus -
  *  DELETE /onibus/motorista/:id - 
  */
