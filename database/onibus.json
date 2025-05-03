@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "1746293531448",
+    "placa": "ABC1234",
+    "modelo": "Hilux",
+    "ano_fabricacao": "2010",
+    "capacidade": "47",
+    "motorista_id": "1746228597376"
+  },
+  {
+    "id": "1746293560218",
+    "placa": "ABC1234",
+    "modelo": "Mercedes",
+    "ano_fabricacao": "2010",
+    "capacidade": "47",
+    "motorista_id": "1746228597376"
+  }
+]

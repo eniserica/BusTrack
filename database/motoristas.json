@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "1746293544317",
+    "nome": "Joao",
+    "data_nascimento": "2007/01/01",
+    "carteira_habilitacao": "123456abc"
+  },
+  {
+    "id": "1746295192458",
+    "nome": "Erica",
+    "data_nascimento": "2007/04/01",
+    "carteira_habilitacao": "123456abc"
+  }
+]

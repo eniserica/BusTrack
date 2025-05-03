@@ -175,102 +175,108 @@ app.post("/onibus", (request, response)=>{
  })
 
 //Listar Motoristas 
-// app.get("/motoristas/:id", (request, response) => {
-//     const { id } = request.params;
+app.get("/motoristas/:id", (request, response) => {
+    const { id } = request.params;
 
-//     fs.readFile(url_databasemotoristas, 'utf-8', (err, data) => {
-//         if (err) {
-//             response.status(500).json({ mensagem: "Erro ao ler arquivo" });
-//             return;
-//         }
+    fs.readFile(url_databasemotoristas, 'utf-8', (err, data) => {
+        if (err) {
+            response.status(500).json({ mensagem: "Erro ao ler arquivo" });
+            return;
+        }
 
-//         const motoristas = JSON.parse(data);
+        const motoristas = JSON.parse(data);
 
-//         const encontrarMotorista = motoristas.find((obj) => obj.id === id);
-//         if (!encontrarMotorista) {
-//             response.status(404).json({ mensagem: "Motorista não encontrado" });
-//             return;
-//         }
+        const encontrarMotorista = motoristas.find((obj) => obj.id === id);
+        if (!encontrarMotorista) {
+            response.status(404).json({ mensagem: "Motorista não encontrado" });
+            return;
+        }
 
-//         response.status(200).json({ mensagem: "Motorista encontrado", data: encontrarMotorista });
-//     });
-// });
+        response.status(200).json({ mensagem: "Motorista encontrado", data: encontrarMotorista });
+    });
+});
 
-// //Listar Onibus 
-// app.get("/onibus/:id", (request, response) => {
-//         const { id } = request.params;
-//         fs.readFile(url_databaseonibus, 'utf-8', (err, data) => {
-//             if (err) {
-//                 response.status(500).json({ mensagem: "Erro ao ler arquivo" });
-//                 return;
-//             }
+//Listar Onibus 
+app.get("/onibus/:id", (request, response) => {
+        const { id } = request.params;
+        fs.readFile(url_databaseonibus, 'utf-8', (err, data) => {
+            if (err) {
+                response.status(500).json({ mensagem: "Erro ao ler arquivo" });
+                return;
+            }
     
-//             const onibus = JSON.parse(data);
+            const onibus = JSON.parse(data);
     
-//             const encontrarOnibus= onibus.find((obj) => obj.id === id);
-//             if (!encontrarOnibus) {
-//                 response.status(404).json({ mensagem: "Onibus não encontrado" });
-//                 return;
-//             }
+            const encontrarOnibus= onibus.find((obj) => obj.id === id);
+            if (!encontrarOnibus) {
+                response.status(404).json({ mensagem: "Onibus não encontrado" });
+                return;
+            }
     
-//             response.status(200).json({ mensagem: "Onibus encontrado", data: encontrarOnibus});
-//         });
+            response.status(200).json({ mensagem: "Onibus encontrado", data: encontrarOnibus});
+        });
 
-// });
+});
 
-// //Listar motoristas e seu determinado onibus 
+//Listar motoristas e seu determinado onibus 
 
-// app.get("/onibus/motorista/:id", (request, response) => {
-//   const { id } = request.params;
-//   //Ler o arquivo de ônibus
-//   fs.readFile(url_databaseonibus, "utf-8", (errBus, dataBus) => {
-//       if (errBus) {
-//           response.status(500).json({ mensagem: "Erro ao ler arquivo de ônibus" });
-//           return;
-//       }
+app.get("/onibus/motorista/:id", (request, response) => {
+  const { id } = request.params;
+  //Ler o arquivo de ônibus
+  fs.readFile(url_databaseonibus, "utf-8", (errBus, dataBus) => {
+      if (errBus) {
+          response.status(500).json({ mensagem: "Erro ao ler arquivo de ônibus" });
+          return;
+      }
 
-//       const onibus = JSON.parse(dataBus);
+      const onibus = JSON.parse(dataBus);
 
-//       const encontrarOnibus = onibus.find((obj) => obj.id === id);
-//       if (!encontrarOnibus) {
-//           response.status(404).json({ mensagem: "Ônibus não encontrado" });
-//           return;
-//       }
+      const encontrarOnibus = onibus.find((obj) => obj.id === id);
+      if (!encontrarOnibus) {
+          response.status(404).json({ mensagem: "Ônibus não encontrado" });
+          return;
+      }
 
-//       //Ler o arquivo de motoristas
-//       fs.readFile(url_databasemotoristas, "utf-8", (errMotor, dataMotor) => {
-//           if (errMotor) {
-//               response.status(500).json({ mensagem: "Erro ao ler arquivo de motoristas" });
-//               return;
-//           }
+      //Ler o arquivo de motoristas
+      fs.readFile(url_databasemotoristas, "utf-8", (errMotor, dataMotor) => {
+          if (errMotor) {
+              response.status(500).json({ mensagem: "Erro ao ler arquivo de motoristas" });
+              return;
+          }
 
-//           const motoristas = JSON.parse(dataMotor);
+          const motoristas = JSON.parse(dataMotor);
 
-//           // Encontra o motorista correspondente pelo motorista_id
-//           //Cria uma variavel pra armazenar o motorista correspondente dai procura no array de motoristas, passa no parametro apenas um motorista que tenha o mesmo id do motorista_id do ônibus
-//           const motoristaCorrespondente = motoristas.find(
-//               (motorista) => motorista.id === encontrarOnibus.motorista_id
-//           );
+          // Encontra o motorista correspondente pelo motorista_id
+          //Cria uma variavel pra armazenar o motorista correspondente dai procura no array de motoristas, passa no parametro apenas um motorista que tenha o mesmo id do motorista_id do ônibus
+          const motoristaCorrespondente = motoristas.find(
+              (motorista) => motorista.id === encontrarOnibus.motorista_id
+          );
 
-//           // Adicione o motorista ao objeto do ônibus
+          // Adicione o motorista ao objeto do ônibus
 
-//           //assign usa pra juntar um objeto com outro, o push adiciona um novo objeto no array, mas nesse caso não é um array e sim juntar um objeto dentro de outro. 
-//           const onibusComMotorista = Object.assign({}, encontrarOnibus, {
-//             motorista: motoristaCorrespondente || null, //null se não encontrar o motorista
-//         });
-//           // Retorne o ônibus com o motorista
-//           response.status(200).json({
-//               mensagem: "Ônibus encontrado com motorista",
-//               data: onibusComMotorista,
-//           });
-//       });
-//   });
-// });
+          //assign usa pra juntar um objeto com outro, o push adiciona um novo objeto no array, mas nesse caso não é um array e sim juntar um objeto dentro de outro. 
+          const onibusComMotorista = Object.assign({}, encontrarOnibus, {
+            motorista: motoristaCorrespondente || null, //null se não encontrar o motorista
+        });
+          // Retorne o ônibus com o motorista
+          response.status(200).json({
+              mensagem: "Ônibus encontrado com motorista",
+              data: onibusComMotorista,
+          });
+      });
+  });
+});
 
 // app.put("/motoristas/onibus/:id", (req, res)=>{
 //   const {id} = req.params;
 //   const {onibus_id} = req.body;
 
+//   if(!onibus_id || typeof onibus_id !== "string" || onibus_id.trim() === ""){
+//     res
+//     .status(400)
+//     .json({menssage: "O campo 'onibus_id' é obrigatório e deve ser um texto"});
+//     return;
+//   }
 // // Ler o arquivo motoristas.json
 //   fs.readFile(url_databasemotoristas, "utf-8", (errMotor, dataMotor) => {
 //     if (errMotor) {
@@ -286,12 +292,7 @@ app.post("/onibus", (request, response)=>{
 //       return;
 //     }
   
-//   if(!onibus_id || typeof onibus_id !== "string" || onibus_id.trim() === ""){
-//       res
-//       .status(400)
-//       .json({menssage: "O campo 'onibus_id' é obrigatório e deve ser um texto"});
-//       return;
-//   }
+ 
   
 //   const onibus = JSON.parse(dataBus);
 //   const encontrarOnibus = onibus.find((obj)=> obj.id === onibus_id);
@@ -325,7 +326,6 @@ app.post("/onibus", (request, response)=>{
 
 // // })
 
-// app.listen(PORT, () => {
-//   console.log("Servidor iniciado em: http://localhost:3333");
-// });
-// });
+app.listen(PORT, () => {
+  console.log("Servidor iniciado em: http://localhost:3333");
+});
